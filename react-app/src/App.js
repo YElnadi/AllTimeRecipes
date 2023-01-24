@@ -8,6 +8,8 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
+import UploadImages from './components/file_upload/UploadImages';
+import ViewImages from './components/file_upload/ViewImages';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -40,8 +42,11 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute>
-        <Route path='/' exact={true} >
-          <h1>My Home Page</h1>
+        <Route path="/upload" exact={true}>
+          <UploadImages />
+        </Route>
+        <Route path="/images" exact={true}>
+          <ViewImages />
         </Route>
       </Switch>
     </BrowserRouter>
