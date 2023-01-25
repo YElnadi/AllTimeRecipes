@@ -22,6 +22,8 @@ const UploadPicture = () => {
             body: formData,
         });
         if (res.ok) {
+            console.log("success")
+            console.log('********res', res)
             await res.json();
             setImageLoading(false);
             history.push("/images");
@@ -30,7 +32,8 @@ const UploadPicture = () => {
             setImageLoading(false);
             // a real app would probably use more advanced
             // error handling
-            console.log("error");
+            // console.log("error");
+            console.log('********res', res)
         }
     }
     
