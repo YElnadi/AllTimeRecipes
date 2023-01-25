@@ -10,6 +10,7 @@ import User from './components/User';
 import { authenticate } from './store/session';
 import UploadImages from './components/file_upload/UploadImages';
 import ViewImages from './components/file_upload/ViewImages';
+import Home from './components/Home';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -28,8 +29,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      {/* <NavBar /> */}
       <Switch>
+        <Route path='/' exact={true}>
+          <Home />
+        </Route>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>

@@ -38,5 +38,6 @@ class Recipe(db.Model):
             "servings": self.servings,
             "cook_time": self.cook_time,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "user":self.user.username
         }

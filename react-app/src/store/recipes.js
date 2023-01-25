@@ -26,4 +26,20 @@ export const loadRecipesThunk = () => async (dispatch) =>{
 
 
 /////////REDUCER/////////////
-const intialState = {}
+const initialState = {allRecipes:{}}
+export default function reducer(state = initialState, action){
+    switch (action.type) {
+        case LOAD_RECIPES:{
+            const newState = {
+                allRecipes:{}
+            };
+            action.recipes.forEach(recipe => {
+                newState.allRecipes[recipe.id]=recipe
+            });
+            return newState
+        }
+            
+        default:
+            return state;
+    }
+}
