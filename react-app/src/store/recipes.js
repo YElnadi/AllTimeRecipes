@@ -1,4 +1,5 @@
 const LOAD_RECIPES = "recipes/LOAD_ALL_RECIPES";
+const LOAD_SINGLE_RECIPE = "recipe/LOAD_SINGLE_RECIPE";
 
 
 
@@ -7,6 +8,11 @@ const loadRecipes = (recipes) =>({
     type:LOAD_RECIPES,
     recipes
 });
+
+const loadSingleRecipe = (recipe) =>({
+    type: LOAD_SINGLE_RECIPE,
+    recipe
+})
 
 
 
@@ -23,6 +29,16 @@ export const loadRecipesThunk = () => async (dispatch) =>{
 };
 
 
+export const loadSingleRecipeThunk = (recipeId) => async (dispatch) =>{
+    const response = await fetch(`/api/recipes/${recipeId}`);
+    if(response.ok){
+        const data = await response.json();
+        dispatch(loadSingleRecipe);
+        return data
+    }
+}
+
+
 
 
 /////////REDUCER/////////////
@@ -37,6 +53,12 @@ export default function reducer(state = initialState, action){
                 newState.allRecipes[recipe.id]=recipe
             });
             return newState
+        }
+        case LOAD_SINGLE_RECIPE:{
+            const newState ={
+                allRecipes:{...state.allRecipes}
+            };
+            return newState;
         }
             
         default:

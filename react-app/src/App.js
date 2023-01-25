@@ -11,6 +11,7 @@ import { authenticate } from './store/session';
 import UploadImages from './components/file_upload/UploadImages';
 import ViewImages from './components/file_upload/ViewImages';
 import Home from './components/Home';
+import SingleRecipeDetails from './components/SingleRecipeDetails';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -34,18 +35,21 @@ function App() {
         <Route path='/' exact={true}>
           <Home />
         </Route>
+        <Route path='/recipes/:recipeId' exact={true}>
+          <SingleRecipeDetails />
+        </Route>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
+        <Route path='/users' exact={true} >
           <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
+        </Route>
+        <Route path='/users/:userId' exact={true} >
           <User />
-        </ProtectedRoute>
+        </Route>
         <Route path="/upload" exact={true}>
           <UploadImages />
         </Route>
