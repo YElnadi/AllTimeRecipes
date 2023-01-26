@@ -1,0 +1,5 @@
+.login-signup-btn{
+    display:flex;
+    float:right;
+    gap:8px;
+}
