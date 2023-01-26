@@ -1,7 +1,16 @@
 .menu{
-  width:10rem;
-  text-align:start;  
-  list-style: none;
-
+    position: absolute;
+    background: #fafafa; 
+    border: 1px solid #eee; 
+    border-radius: 1px;
+    /* width: 130px; */
+    height:60px; 
+    right:1px;
+    
+    
+    
+}
+.menu li{
+    list-style: none;
 }
 
