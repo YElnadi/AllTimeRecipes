@@ -8,6 +8,7 @@ const CoverPhoto = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const allRecipes = useSelector((state) => state.recipes.allRecipes);
+  const sessionUser = useSelector(state=>state.session.user)
 
   //const recipeImage = Object.values(allRecipes);
   //console.log('image', recipeImage[0].image_url)

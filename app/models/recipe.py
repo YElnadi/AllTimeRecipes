@@ -11,17 +11,18 @@ class Recipe(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(255), nullable=False)
     image_url = db.Column(db.Text)
-    description = db.Column(db.Text)
-    preparations = db.Column(db.Text)
-    servings = db.Column(db.Integer)
-    cook_time = db.Column(db.Integer)
+    description = db.Column(db.Text, nullable=False)
+    preparations = db.Column(db.Text, nullable=False)
+    servings = db.Column(db.Integer, nullable=False)
+    cook_time = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     ##relationships
     user = db.relationship("User", back_populates ='recipes')
+    ingredients = db.relationship("Ingredient", back_populates ='recipe', cascade="all, delete")
 
     # notes = db.relationship("Note", back_populates ='recipe', cascade="all, delete")
 
@@ -39,5 +40,6 @@ class Recipe(db.Model):
             "cook_time": self.cook_time,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "user":self.user.username
+            "user":self.user.username,
+            "ingredients":[ingredient.to_dict()for ingredient in self.ingredients]
         }

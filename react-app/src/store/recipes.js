@@ -33,7 +33,7 @@ export const loadSingleRecipeThunk = (recipeId) => async (dispatch) =>{
     const response = await fetch(`/api/recipes/${recipeId}`);
     if(response.ok){
         const data = await response.json();
-        dispatch(loadSingleRecipe);
+        dispatch(loadSingleRecipe(data));
         return data
     }
 }
@@ -42,12 +42,13 @@ export const loadSingleRecipeThunk = (recipeId) => async (dispatch) =>{
 
 
 /////////REDUCER/////////////
-const initialState = {allRecipes:{}}
+const initialState = {allRecipes:{}, singleRecipe:{}}
 export default function reducer(state = initialState, action){
     switch (action.type) {
         case LOAD_RECIPES:{
             const newState = {
-                allRecipes:{}
+                allRecipes:{},
+                singleRecipe:{...state.singleRecipe}
             };
             action.recipes.forEach(recipe => {
                 newState.allRecipes[recipe.id]=recipe
@@ -56,7 +57,8 @@ export default function reducer(state = initialState, action){
         }
         case LOAD_SINGLE_RECIPE:{
             const newState ={
-                allRecipes:{...state.allRecipes}
+                allRecipes:{...state.allRecipes},
+                singleRecipe:action.recipe
             };
             return newState;
         }
