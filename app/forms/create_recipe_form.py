@@ -9,5 +9,6 @@ class RecipeForm(FlaskForm):
   description = TextField('Description', validators=[DataRequired()] )
   preparation = TextField('Preparation', validators=[DataRequired()])
   servings = IntegerField('Servings',  validators=[DataRequired()])
+  cook_time = IntegerField('Time', validators=[DataRequired()])
   user_id = IntegerField('User Id')
-  submit = SubmitField('Submit')
+  submit = SubmitField('Save')

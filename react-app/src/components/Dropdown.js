@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import LogoutButton from "./auth/LogoutButton";
 import { useState } from "react";
 import './Dropdown.css'
+import AddRecipe from "./AddRecipe";
 
 const Dropdown = () => {
   const [dropdown, setDropdown] = useState(false);
@@ -13,6 +14,9 @@ const Dropdown = () => {
           <LogoutButton />
         </li>
         <li>your profile</li>
+        <li>
+          <NavLink to='/new-recipe'>Share A Recipe</NavLink>
+          </li>
       </ul>
     </>
   );

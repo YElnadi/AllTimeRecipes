@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import "./NavBar.css";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
+import AddRecipe from "./AddRecipe";
 
 const NavBar = ({}) => {
   const sessionUser = useSelector(state => state.session.user);

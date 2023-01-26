@@ -13,6 +13,7 @@ import ViewImages from './components/file_upload/ViewImages';
 import Home from './components/Home';
 import SingleRecipeDetails from './components/SingleRecipeDetails';
 import './index.css'
+import AddRecipe from './components/AddRecipe';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -56,6 +57,9 @@ function App() {
         </Route>
         <Route path="/images" exact={true}>
           <ViewImages />
+        </Route>
+        <Route path="/new-recipe" exact={true}>
+          <AddRecipe />
         </Route>
       </Switch>
     </BrowserRouter>
