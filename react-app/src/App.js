@@ -12,6 +12,7 @@ import UploadImages from './components/file_upload/UploadImages';
 import ViewImages from './components/file_upload/ViewImages';
 import Home from './components/Home';
 import SingleRecipeDetails from './components/SingleRecipeDetails';
+import './index.css'
 
 function App() {
   const [loaded, setLoaded] = useState(false);

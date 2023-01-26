@@ -24,8 +24,8 @@ const CoverPhoto = () => {
   return (
     <>
     {Object.values(allRecipes).length >0 &&
-          <div className="cover-image">
-            <img src={allRecipes[1].image_url} onClick={openRecipe}/>
+          <div >
+            <img src={allRecipes[1].image_url} onClick={openRecipe} className="cover-image"/>
           </div>
     }
     </>
