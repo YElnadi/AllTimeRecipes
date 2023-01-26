@@ -1,5 +1,6 @@
 const LOAD_RECIPES = "recipes/LOAD_ALL_RECIPES";
 const LOAD_SINGLE_RECIPE = "recipe/LOAD_SINGLE_RECIPE";
+const CREATE_RECIPE = "recipe/CREATE_RECIPE";
 
 
 
@@ -13,6 +14,12 @@ const loadSingleRecipe = (recipe) =>({
     type: LOAD_SINGLE_RECIPE,
     recipe
 })
+
+const createRecipe = (recipe) =>({
+    type:CREATE_RECIPE,
+    recipe
+})
+
 
 
 
@@ -39,6 +46,26 @@ export const loadSingleRecipeThunk = (recipeId) => async (dispatch) =>{
 }
 
 
+export const createRecipeThunk = (newRecipe) => async (dispatch) =>{
+    for (const pair of newRecipe.entries()) {
+        console.log(`+++++ ${pair[0]}, ${pair[1]}`);
+      }
+      console.log("+++++ ", JSON.stringify(Object.fromEntries(newRecipe)))
+  
+    const response = await fetch(`/api/recipes/new-recipe`, {
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(newRecipe)),
+    });
+    if(response.ok){
+        const newRecipe = await response.json();
+        dispatch(createRecipe(newRecipe));
+        return newRecipe
+    }
+}
+
 
 
 /////////REDUCER/////////////
@@ -61,6 +88,16 @@ export default function reducer(state = initialState, action){
                 singleRecipe:action.recipe
             };
             return newState;
+        }
+        case CREATE_RECIPE:{
+            const newState ={
+                ...state,
+                allRecipes:{...state.allRecipes},
+                singleRecipe:action.recipe,
+            }
+            newState.allRecipes[action.recipe.id]=action.recipe;
+            newState.singleRecipe=action.recipe;
+            return newState
         }
             
         default:

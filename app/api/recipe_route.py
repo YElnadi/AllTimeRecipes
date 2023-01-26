@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Recipe
 from ..forms.create_recipe_form import RecipeForm
+from .auth_routes import validation_errors_to_error_messages
 
 recipe_routes = Blueprint('recipes', __name__)
 
@@ -27,15 +28,21 @@ def create_recipe():
     form = RecipeForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        new_recipe = Recipe()
-        form.populate_obj(new_recipe)
-        # new_recipe.image_url = form.data['image_url'] if form.data
-        # ['image_url'] else 
-
+        new_recipe = Recipe(
+            title = form.data['title'],
+            description = form.data['description'],
+            preparations = form.data['preperations'],
+            servings = form.data['servings'],
+            cook_time = form.data['cook_time'],
+            image_url = form.data['image_url'],
+            user_id = current_user.id,
+        )
         db.session.add(new_recipe)
         db.session.commit()
         return new_recipe.to_dict()
-    else:
-        return form.errors
+    return {"errors":validation_errors_to_error_messages(form.errors)}, 401
+        
+
+        
             
 
