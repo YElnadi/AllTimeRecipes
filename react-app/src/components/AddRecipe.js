@@ -53,7 +53,10 @@ const AddRecipe = () => {
     }
     console.log(formData);
     return dispatch(createRecipeThunk(formData))
-    .then(history.push(`/`))
+    .then(recipe =>{
+      const {id} = recipe;
+      history.push(`/recipes/${id}`)
+    })
 
   }
   const updateImage = (e) => {
