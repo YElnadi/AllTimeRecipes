@@ -21,7 +21,7 @@ const Home = () => {
     return (
         <>
         <CoverPhoto/>
-        <h1>What to cook this week</h1>
+        <h1 style={{fontWeight:500}}>What to cook this week</h1>
         <div className='recipe-cards-container'>
             {Object.values(allRecipes).length>0 &&
             <>
