@@ -26,8 +26,8 @@ def seed():
 
     seed_users()
     seed_images()
-    ingredeints = seed_ingredients()
-    seed_recipes(ingredeints)
+    seed_recipes()
+    seed_ingredients()
     # Add other seed functions here
 
 
