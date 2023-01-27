@@ -14,9 +14,11 @@ import Home from './components/Home';
 import SingleRecipeDetails from './components/SingleRecipeDetails';
 import './index.css'
 import AddRecipe from './components/AddRecipe';
+import EditRecipe from './components/EditRecipe';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,6 +64,8 @@ function App() {
           <AddRecipe />
         </Route>
       </Switch>
+      
+      
     </BrowserRouter>
   );
 }

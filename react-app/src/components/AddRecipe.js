@@ -6,6 +6,7 @@ import { createNewRecipeThunk } from "../store/recipes";
 const AddRecipe = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(
     "../static/images/recipe-defualt-photo.jpeg"
@@ -47,10 +48,22 @@ const AddRecipe = () => {
       body: formData,
     });
     if (res.ok) {
-      await res.json();
+      const newRecipe = await res.json();
+      //console.log("data", data)
+
+      // if(data){
+      //   setErrors(data)
+      // }
       setImageLoading(false);
-      history.push(`/recipes/${recipe.id}`);
+      console.log('recipeId#####', newRecipe.id)
+      history.push(`/recipes/${newRecipe.id}`);
     } else {
+      const data = await res.json();
+      //console.log("#####x", data)
+      if(data){
+           setErrors(data)
+         }
+
       setImageLoading(false);
       // a real app would probably use more advanced
       // error handling
@@ -64,9 +77,21 @@ const AddRecipe = () => {
     setImage(file);
   };
 
+  const cancel = (e) =>{
+    e.preventDefault()
+    history.push(`/`)
+  }
+
   return (
     <div>
       <form onSubmit={handelSubmit}>
+      <div>
+        {Object.values(errors).map((error, ind) => (
+          <div key={ind}>{error}</div>
+        ))}
+      </div>
+        <label> 
+          Title
         <input
           className="create-recipe-form-inputs"
           type="Text"
@@ -76,7 +101,12 @@ const AddRecipe = () => {
           required
 
         />
+        </label>
+        <label> Add Image 
         <input type="file" accept="image/*" onChange={updateImage} required />
+        </label>
+        <label>
+          Description
         <textarea
           className="create-recipe-form-inputs"
           type="text"
@@ -85,6 +115,9 @@ const AddRecipe = () => {
           placeholder="Description"
           required
         />
+        </label>
+        <label>
+          Preparations
         <textarea
           className="create-recipe-form-inputs"
           type="text"
@@ -93,6 +126,9 @@ const AddRecipe = () => {
           placeholder="Preperations"
           required
         />
+        </label>
+        <label>
+          Servings
         <input
           className="create-recipe-form-inputs"
           type="number"
@@ -101,6 +137,9 @@ const AddRecipe = () => {
           placeholder="Servings"
           required
         />
+        </label>
+        <label>
+          Time
         <input
           className="create-recipe-form-inputs"
           type="number"
@@ -109,7 +148,10 @@ const AddRecipe = () => {
           placeholder="Time"
           required
         />
+        </label>
         <button type="submit">Save</button>
+        <button onClick={cancel}>Cancel</button>
+
         {imageLoading && <p>Loading...</p>}
       </form>
     </div>

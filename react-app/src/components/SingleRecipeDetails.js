@@ -2,9 +2,10 @@ import { useParams, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { loadSingleRecipeThunk } from "../store/recipes";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import DeleteRecipe from "./DeleteRecipe";
 import EditRecipe from "./EditRecipe";
+
 
 const SingleRecipeDetails = () => {
   const { recipeId } = useParams();
@@ -15,6 +16,8 @@ const SingleRecipeDetails = () => {
   const singleRecipe = useSelector((state) => state.recipes.singleRecipe);
   console.log("single recipe", singleRecipe);
   //console.log("session user", sessionUser);
+
+
 
   const getIngredents = (singleRecipe) => {
     const ingredents =
@@ -44,7 +47,14 @@ const SingleRecipeDetails = () => {
       )}
 
       {sessionUser && sessionUser.id === singleRecipe.user_id && (
-        <EditRecipe buttonClicked={false} singleRecipe={singleRecipe} />
+        // <OpenModalMenuItem
+        //   itemText={<button>Edit your recipe</button>}
+        //   onItemClick={closeMenu}
+        //   modalComponent={<EditRecipe key={recipeId}/>}
+        // />
+        
+
+         <EditRecipe buttonClicked={false} singleRecipe={singleRecipe} />
       )}
     </>
   );

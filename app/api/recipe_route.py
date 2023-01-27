@@ -57,7 +57,7 @@ def upload_image():
     data = request.form.to_dict()
 
     if not allowed_file(image.filename):
-        return {"errors": "file type not permitted"}, 400
+        return {"errors": "image of type pdf, png, jpg, jpeg, gif are the only allowed"}, 400
 
     image.filename = get_unique_filename(image.filename)
 
