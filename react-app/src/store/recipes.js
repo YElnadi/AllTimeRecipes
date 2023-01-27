@@ -47,12 +47,12 @@ export const loadSingleRecipeThunk = (recipeId) => async (dispatch) =>{
 
 
 export const createRecipeThunk = (newRecipe) => async (dispatch) =>{
-    for (const pair of newRecipe.entries()) {
-        console.log(`+++++ ${pair[0]}, ${pair[1]}`);
-      }
-      console.log("+++++ ", JSON.stringify(Object.fromEntries(newRecipe)))
+    // for (const pair of newRecipe.entries()) {
+    //     console.log(`+++++ ${pair[0]}, ${pair[1]}`);
+    //   }
+    //   console.log("+++++ ", JSON.stringify(Object.fromEntries(newRecipe)))
   
-    const response = await fetch(`/api/recipes/new-recipe`, {
+    const response = await fetch(`/api/recipes`, {
         method:"POST",
         headers:{
             "Content-Type": "application/json",
@@ -64,6 +64,19 @@ export const createRecipeThunk = (newRecipe) => async (dispatch) =>{
         dispatch(createRecipe(newRecipe));
         return newRecipe
     }
+}
+
+
+export const createNewRecipeThunk = (formData) => async (dispatch) => {
+    const res = await fetch(`/api/recipes`, {
+        method:"POST",
+        body: formData,
+    });
+    if (res.ok){
+        const data = await res.json();
+        await dispatch(createRecipe(data))
+    }
+    return res
 }
 
 

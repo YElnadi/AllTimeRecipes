@@ -58,7 +58,7 @@ function App() {
         <Route path="/images" exact={true}>
           <ViewImages />
         </Route>
-        <Route path="/new-recipe" exact={true}>
+        <Route path="/recipes" exact={true}>
           <AddRecipe />
         </Route>
       </Switch>

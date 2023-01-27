@@ -15,7 +15,7 @@ const Dropdown = () => {
         </li>
         <li>your profile</li>
         <li>
-          <NavLink to='/new-recipe'>Share A Recipe</NavLink>
+          <NavLink to='/recipes'>Share A Recipe</NavLink>
           </li>
       </ul>
     </>
