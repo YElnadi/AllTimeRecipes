@@ -1,6 +1,8 @@
 const LOAD_RECIPES = "recipes/LOAD_ALL_RECIPES";
 const LOAD_SINGLE_RECIPE = "recipe/LOAD_SINGLE_RECIPE";
 const CREATE_RECIPE = "recipe/CREATE_RECIPE";
+const DELETE_RECIPE = "recipe/DELETE_RECIPE";
+const EDIT_RECIPE = "recipe/EDIT_RECIPE"
 
 
 
@@ -20,6 +22,15 @@ const createRecipe = (recipe) =>({
     recipe
 })
 
+const deleteRecipe = (recipeId) =>({
+    type:DELETE_RECIPE,
+    recipeId
+})
+
+const editRecipe = (data) =>({
+    type:EDIT_RECIPE,
+    data
+})
 
 
 
@@ -47,11 +58,6 @@ export const loadSingleRecipeThunk = (recipeId) => async (dispatch) =>{
 
 
 export const createRecipeThunk = (newRecipe) => async (dispatch) =>{
-    // for (const pair of newRecipe.entries()) {
-    //     console.log(`+++++ ${pair[0]}, ${pair[1]}`);
-    //   }
-    //   console.log("+++++ ", JSON.stringify(Object.fromEntries(newRecipe)))
-  
     const response = await fetch(`/api/recipes`, {
         method:"POST",
         headers:{
@@ -79,6 +85,29 @@ export const createNewRecipeThunk = (formData) => async (dispatch) => {
     return res
 }
 
+export const deleteRecipeThunk = (recipeId) => async (dispatch) =>{
+    const response = await fetch(`/api/recipes/${recipeId}`, {
+        method:"DELETE",
+    });
+    if(response.ok){
+        dispatch(deleteRecipe(recipeId));
+        return response;
+    }
+};
+
+export const editRecipeThunk = (recipe, id) => async(dispatch) =>{
+    const response = await fetch(`/api/recipes/${recipe.id}`, {
+        method:"PUT",
+        headers:{
+            "Content-Type": "application/json", 
+        },
+        body: JSON.stringify(recipe),
+    })
+    if (response.ok) {
+        dispatch(editRecipe( recipe ));
+        return response;
+      }
+}
 
 
 /////////REDUCER/////////////
@@ -111,6 +140,23 @@ export default function reducer(state = initialState, action){
             newState.allRecipes[action.recipe.id]=action.recipe;
             newState.singleRecipe=action.recipe;
             return newState
+        }
+        case DELETE_RECIPE:{
+            const newState={
+                allRecipes:{...state.allRecipes},
+                singleRecipe:{},
+            };
+            delete newState.allRecipes[action.recipeId];
+            return newState
+        }
+        case EDIT_RECIPE:{
+            const newState = {
+                allRecipes:{...state.allRecipes},
+                singleRecipe:{...state.singleRecipe}
+            };
+            newState.allRecipes[action.data.id] = action.data;
+            newState.singleRecipe=action.data;
+            return newState;
         }
             
         default:

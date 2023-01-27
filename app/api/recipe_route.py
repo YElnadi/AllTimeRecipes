@@ -84,7 +84,40 @@ def upload_image():
     db.session.commit()
     return new_recipe.to_dict()
 
-    
+
+##Delete a recipe
+@recipe_routes.route("/<int:id>", methods=['DELETE'])
+@login_required
+def delete_recipe(id):
+    recipe = Recipe.query.get(id)
+    if recipe:
+        db.session.delete(recipe)
+        db.session.commit()
+        return {"message":"Recipe has been deleted successfully"}
+    else:
+        return{"message":f"No recipe found with id f {id}"}
+
+
+##Edit Recipe
+@recipe_routes.route("/<int:id>", methods=["PUT"])
+@login_required
+def edit_recipe(id):
+    recipe = Recipe.query.get(id)
+    new_title = request.json["title"]
+    new_description = request.json["description"]
+    new_preparations = request.json["preparations"]
+    new_servings = request.json["servings"]
+    new_cook_time = request.json["cook_time"]
+    new_image_url = request.json['image_url']
+    if recipe:
+        recipe.title = new_title
+        recipe.description = new_description
+        recipe.preparations = new_preparations
+        recipe.servings = new_servings
+        recipe.cook_time = new_cook_time
+        recipe.image_url = new_image_url
+        db.session.commit()
+        return recipe.to_dict()    
         
 
         

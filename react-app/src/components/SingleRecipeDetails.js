@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { loadSingleRecipeThunk } from "../store/recipes";
 import { useEffect } from "react";
+import DeleteRecipe from "./DeleteRecipe";
+import EditRecipe from "./EditRecipe";
 
 const SingleRecipeDetails = () => {
   const { recipeId } = useParams();
@@ -15,10 +17,10 @@ const SingleRecipeDetails = () => {
   //console.log("session user", sessionUser);
 
   const getIngredents = (singleRecipe) => {
-    const ingredents = singleRecipe.ingredients !== undefined ? singleRecipe.ingredients : [];
+    const ingredents =
+      singleRecipe.ingredients !== undefined ? singleRecipe.ingredients : [];
     return Object.values(ingredents);
   };
- 
 
   useEffect(async () => {
     await dispatch(loadSingleRecipeThunk(recipeId));
@@ -32,9 +34,18 @@ const SingleRecipeDetails = () => {
       <p>{singleRecipe.user}</p>
       <p>{singleRecipe.description}</p>
       <p>{singleRecipe.preparations}</p>
-      {getIngredents(singleRecipe).map(ingredient=>
-        <p>{ingredient.quantatiy} {ingredient.unit} {ingredient.item_name}</p>
-      )}      
+      {getIngredents(singleRecipe).map((ingredient) => (
+        <p>
+          {ingredient.quantatiy} {ingredient.unit} {ingredient.item_name}
+        </p>
+      ))}
+      {sessionUser && sessionUser.id === singleRecipe.user_id && (
+        <DeleteRecipe recipeId={recipeId} />
+      )}
+
+      {sessionUser && sessionUser.id === singleRecipe.user_id && (
+        <EditRecipe buttonClicked={false} singleRecipe={singleRecipe} />
+      )}
     </>
   );
 };
