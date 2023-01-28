@@ -19,7 +19,6 @@ const SingleRecipeDetails = () => {
   //console.log("session user", sessionUser);
 
 
-
   const getIngredents = (singleRecipe) => {
     const ingredents =
       singleRecipe.ingredients !== undefined ? singleRecipe.ingredients : [];
