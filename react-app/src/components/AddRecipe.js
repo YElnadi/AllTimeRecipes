@@ -55,7 +55,7 @@ const AddRecipe = () => {
       //   setErrors(data)
       // }
       setImageLoading(false);
-      console.log('recipeId#####', newRecipe.id)
+      //console.log('recipeId#####', newRecipe.id)
       history.push(`/recipes/${newRecipe.id}`);
     } else {
       const data = await res.json();
