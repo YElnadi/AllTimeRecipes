@@ -14,7 +14,6 @@ class Recipe(db.Model):
     title = db.Column(db.String(255), nullable=False)
     image_url = db.Column(db.Text)
     description = db.Column(db.Text, nullable=False)
-    preparations = db.Column(db.Text, nullable=False)
     servings = db.Column(db.Integer, nullable=False)
     cook_time = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -22,7 +21,10 @@ class Recipe(db.Model):
 
     ##relationships
     user = db.relationship("User", back_populates ='recipes')
+
     ingredients = db.relationship("Ingredient", back_populates ='recipe', cascade="all, delete")
+
+    preparations = db.relationship("Preparation", back_populates='recipe', cascade="all, delete")
 
     # notes = db.relationship("Note", back_populates ='recipe', cascade="all, delete")
 
@@ -35,11 +37,11 @@ class Recipe(db.Model):
             "title": self.title,
             "image_url": self.image_url,
             "description": self.description,
-            "preparations": self.preparations,
             "servings": self.servings,
             "cook_time": self.cook_time,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "user":self.user.username,
-            "ingredients":[ingredient.to_dict()for ingredient in self.ingredients]
+            "ingredients":[ingredient.to_dict()for ingredient in self.ingredients],
+            "preparations":[preparation.to_dict()for preparation in self.preparations]
         }

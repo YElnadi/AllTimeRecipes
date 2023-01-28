@@ -37,7 +37,6 @@ const SingleRecipeDetails = () => {
       <p>{singleRecipe.title}</p>
       <p>{singleRecipe.user}</p>
       <p>{singleRecipe.description}</p>
-      <p>{singleRecipe.preparations}</p>
       {getIngredents(singleRecipe).map((ingredient) => (
         <p>
           {ingredient.quantity} {ingredient.unit} {ingredient.item_name}

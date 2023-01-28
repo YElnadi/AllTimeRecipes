@@ -8,7 +8,6 @@ const EditRecipe = ({ singleRecipe, buttonClicked }) => {
   const [buttonOn, setButtonOn] = useState(buttonClicked);
   const [title, setTitle] = useState(singleRecipe.title);
   const [description, setDescription] = useState(singleRecipe.description);
-  const [preparations, setPreparations] = useState(singleRecipe.preparations);
   const [servings, setServings] = useState(singleRecipe.servings);
   const [cook_time, setCookTime] = useState(singleRecipe.cook_time);
 //   const [image_url, setImageUrl] = useState(recipe.image_url);
@@ -25,7 +24,6 @@ const EditRecipe = ({ singleRecipe, buttonClicked }) => {
     editedRecipe.servings = servings;
     editedRecipe.cook_time = cook_time;
     // editedRecipe.image_url = image_url;
-    editedRecipe.preparations = preparations;
     return dispatch(editRecipeThunk(editedRecipe))
       .then(dispatch(loadSingleRecipeThunk(singleRecipe.id)))
       .then(history.push(`/recipes/${singleRecipe.id}`))
@@ -74,16 +72,7 @@ const EditRecipe = ({ singleRecipe, buttonClicked }) => {
           required
         />
         </label>
-        <label>Preparations
-        <textarea
-          className="create-recipe-form-inputs"
-          type="text"
-          value={preparations}
-          onChange={(e) => setPreparations(e.target.value)}
-          placeholder="Preperations"
-          required
-        />
-        </label>
+      
         <label>Servings
         <input
           className="create-recipe-form-inputs"

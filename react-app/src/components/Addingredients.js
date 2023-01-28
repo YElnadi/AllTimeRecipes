@@ -86,7 +86,6 @@ if (!buttonOn) {
               value={unit}
               onChange={(e) => setUnit(e.target.value)}
               placeholder="Unit"
-              required
             />
           </label>
         </div>

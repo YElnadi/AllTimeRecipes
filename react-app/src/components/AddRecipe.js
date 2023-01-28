@@ -29,7 +29,6 @@ const AddRecipe = () => {
     formData.append("title", title);
     formData.append("image", image);
     formData.append("description", description);
-    formData.append("preparations", preparations);
     formData.append("cook_time", cook_time);
     formData.append("servings", servings);
 

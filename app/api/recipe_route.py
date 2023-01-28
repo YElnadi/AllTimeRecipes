@@ -75,7 +75,6 @@ def upload_image():
         image_url=url,
         title=data['title'],
         description = data['description'],
-        preparations = data['preparations'],
         servings = data['servings'],
         cook_time = data["cook_time"],
         # ingredients = data["ingredients"],
@@ -111,14 +110,12 @@ def edit_recipe(id):
     recipe = Recipe.query.get(id)
     new_title = request.json["title"]
     new_description = request.json["description"]
-    new_preparations = request.json["preparations"]
     new_servings = request.json["servings"]
     new_cook_time = request.json["cook_time"]
     new_image_url = request.json['image_url']
     if recipe:
         recipe.title = new_title
         recipe.description = new_description
-        recipe.preparations = new_preparations
         recipe.servings = new_servings
         recipe.cook_time = new_cook_time
         recipe.image_url = new_image_url
