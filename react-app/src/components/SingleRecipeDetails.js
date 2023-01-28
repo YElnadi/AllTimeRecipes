@@ -7,7 +7,6 @@ import DeleteRecipe from "./DeleteRecipe";
 import EditRecipe from "./EditRecipe";
 import Addingredients from "./Addingredients";
 
-
 const SingleRecipeDetails = () => {
   const { recipeId } = useParams();
   //console.log("recipeId", recipeId);
@@ -18,12 +17,16 @@ const SingleRecipeDetails = () => {
   console.log("single recipe", singleRecipe);
   //console.log("session user", sessionUser);
 
-
-
   const getIngredents = (singleRecipe) => {
     const ingredents =
       singleRecipe.ingredients !== undefined ? singleRecipe.ingredients : [];
     return Object.values(ingredents);
+  };
+
+  const getPreparations = (singleRecipe) => {
+    const preparations =
+      singleRecipe.preparations !== undefined ? singleRecipe.preparations : [];
+    return Object.values(preparations);
   };
 
   useEffect(async () => {
@@ -42,10 +45,15 @@ const SingleRecipeDetails = () => {
           {ingredient.quantity} {ingredient.unit} {ingredient.item_name}
         </p>
       ))}
+      {getPreparations(singleRecipe).map((preparation) => (
+        <p>
+          step {preparation.step} {preparation.instructions} 
+        </p>
+      ))}
       {sessionUser && sessionUser.id === singleRecipe.user_id && (
         <>
-        <DeleteRecipe recipeId={recipeId} />
-        {/* <div>
+          <DeleteRecipe recipeId={recipeId} />
+          {/* <div>
             <button >
             <NavLink to={`/recipes/${recipeId}/Add`} style={{textDecoration:'none', color:'black', }}>
             <Addingredients/>Add Ingredients
@@ -62,17 +70,13 @@ const SingleRecipeDetails = () => {
         //   modalComponent={<EditRecipe key={recipeId}/>}
         // />
         <>
-
-         <EditRecipe buttonClicked={false} singleRecipe={singleRecipe} />
-         
-         
-         </>
+          <EditRecipe buttonClicked={false} singleRecipe={singleRecipe} />
+        </>
       )}
 
-        {sessionUser && sessionUser.id === singleRecipe.user_id && (
-          <Addingredients buttonClicked={false} singleRecipe={singleRecipe} />
-
-        )}
+      {sessionUser && sessionUser.id === singleRecipe.user_id && (
+        <Addingredients buttonClicked={false} singleRecipe={singleRecipe} />
+      )}
     </>
   );
 };
