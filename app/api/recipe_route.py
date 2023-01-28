@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Recipe
-from ..forms.create_recipe_form import RecipeForm
+from app.models import db, Recipe, Ingredient
+from ..forms.create_recipe_form import RecipeForm, IngredientForm
 from .auth_routes import validation_errors_to_error_messages
 from app.s3_helpers import (
     upload_file_to_s3, allowed_file, get_unique_filename)
@@ -78,6 +78,12 @@ def upload_image():
         preparations = data['preparations'],
         servings = data['servings'],
         cook_time = data["cook_time"],
+        # ingredients = data["ingredients"],
+        # Ingredients = Ingredient(
+        #     unit = data["unit"],
+        #     quantity = data["quantity"],
+        #     item_name = data["item_name"]
+        # ),
         user_id = current_user.id,
     )
     db.session.add(new_recipe)
@@ -117,8 +123,29 @@ def edit_recipe(id):
         recipe.cook_time = new_cook_time
         recipe.image_url = new_image_url
         db.session.commit()
-        return recipe.to_dict()    
-        
+        return recipe.to_dict()   
+
+##add ingredients to recipe
+@recipe_routes.route("/<int:id>/add-ingredients", methods=["POST"]) 
+#@login_required
+def add_ingredients_to_recipe(id):
+    # recipe = Recipe.query.get(id)
+    form = IngredientForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_ingredient = Ingredient(
+            quantity = form.data["quantity"],
+            unit = form.data["unit"],
+            item_name = form.data["item_name"],
+            recipe_id = form.data["recipe_id"],
+        )
+        # recipe.append(new_ingredient)
+        db.session.add(new_ingredient)
+        db.session.commit()
+        updated_recipe = Recipe.query.get(form.data['recipe_id'])
+        return updated_recipe.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
         
             

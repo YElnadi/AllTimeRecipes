@@ -11,7 +11,7 @@ class Ingredient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("recipes.id")))
-    quantatiy = db.Column(db.Float)
+    quantity = db.Column(db.Float)
     item_name = db.Column(db.String(255), nullable=False)
     unit = db.Column(db.String(25))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -22,7 +22,7 @@ class Ingredient(db.Model):
         return{
             "id":self.id,
             "recipe_id":self.recipe_id,
-            "quantatiy":self.quantatiy,
+            "quantity":self.quantity,
             "item_name":self.item_name,
             "unit":self.unit
         }

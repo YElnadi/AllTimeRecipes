@@ -1,10 +1,11 @@
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { loadSingleRecipeThunk } from "../store/recipes";
 import { useEffect, useState, useRef } from "react";
 import DeleteRecipe from "./DeleteRecipe";
 import EditRecipe from "./EditRecipe";
+import Addingredients from "./Addingredients";
 
 
 const SingleRecipeDetails = () => {
@@ -39,11 +40,20 @@ const SingleRecipeDetails = () => {
       <p>{singleRecipe.preparations}</p>
       {getIngredents(singleRecipe).map((ingredient) => (
         <p>
-          {ingredient.quantatiy} {ingredient.unit} {ingredient.item_name}
+          {ingredient.quantity} {ingredient.unit} {ingredient.item_name}
         </p>
       ))}
       {sessionUser && sessionUser.id === singleRecipe.user_id && (
+        <>
         <DeleteRecipe recipeId={recipeId} />
+        {/* <div>
+            <button >
+            <NavLink to={`/recipes/${recipeId}/Add`} style={{textDecoration:'none', color:'black', }}>
+            <Addingredients/>Add Ingredients
+            </NavLink>
+            </button>
+        </div> */}
+        </>
       )}
 
       {sessionUser && sessionUser.id === singleRecipe.user_id && (
@@ -52,10 +62,18 @@ const SingleRecipeDetails = () => {
         //   onItemClick={closeMenu}
         //   modalComponent={<EditRecipe key={recipeId}/>}
         // />
-        
+        <>
 
          <EditRecipe buttonClicked={false} singleRecipe={singleRecipe} />
+         
+         
+         </>
       )}
+
+        {sessionUser && sessionUser.id === singleRecipe.user_id && (
+          <Addingredients buttonClicked={false} singleRecipe={singleRecipe} />
+
+        )}
     </>
   );
 };

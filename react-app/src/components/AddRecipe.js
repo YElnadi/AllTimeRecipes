@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewRecipeThunk } from "../store/recipes";
+import Addingredients from "./Addingredients";
 
 const AddRecipe = () => {
   const history = useHistory();
@@ -90,6 +91,7 @@ const AddRecipe = () => {
           <div key={ind}>{error}</div>
         ))}
       </div>
+      <div>
         <label> 
           Title
         <input
@@ -102,9 +104,13 @@ const AddRecipe = () => {
 
         />
         </label>
+        </div>
+        <div>
         <label> Add Image 
         <input type="file" accept="image/*" onChange={updateImage} required />
         </label>
+        </div>
+        <div>
         <label>
           Description
         <textarea
@@ -116,6 +122,8 @@ const AddRecipe = () => {
           required
         />
         </label>
+        </div>
+        <div>
         <label>
           Preparations
         <textarea
@@ -127,6 +135,8 @@ const AddRecipe = () => {
           required
         />
         </label>
+        </div>
+        <div>
         <label>
           Servings
         <input
@@ -138,6 +148,8 @@ const AddRecipe = () => {
           required
         />
         </label>
+        </div>
+        <div>
         <label>
           Time
         <input
@@ -149,8 +161,12 @@ const AddRecipe = () => {
           required
         />
         </label>
+        </div>
+        
+        <div>
         <button type="submit">Save</button>
         <button onClick={cancel}>Cancel</button>
+        </div>
 
         {imageLoading && <p>Loading...</p>}
       </form>

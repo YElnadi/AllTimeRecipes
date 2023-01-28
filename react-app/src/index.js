@@ -11,14 +11,15 @@ import { BrowserRouter } from "react-router-dom";
 const store = configureStore();
 
 ReactDOM.render(
-  <ModalProvider>
   <React.StrictMode>
+    <ModalProvider>
     <Provider store={store}>
       <BrowserRouter>
         <App />
+        <Modal/>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>
-  </ModalProvider>,
+    </ModalProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );

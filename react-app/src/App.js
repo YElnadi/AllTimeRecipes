@@ -15,6 +15,7 @@ import SingleRecipeDetails from './components/SingleRecipeDetails';
 import './index.css'
 import AddRecipe from './components/AddRecipe';
 import EditRecipe from './components/EditRecipe';
+import Addingredients from './components/Addingredients';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -65,7 +66,7 @@ function App() {
         </Route>
       </Switch>
       
-      
+       
     </BrowserRouter>
   );
 }

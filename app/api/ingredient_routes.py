@@ -9,3 +9,4 @@ ingredient_routes = Blueprint('ingredients', __name__)
 def ingredients():
      ingredients = Ingredient.query.order_by(Ingredient.id.desc()).all()
      return {"Ingredeints": [ingredient.to_dict() for ingredient in ingredients]}
+

@@ -3,6 +3,7 @@ const LOAD_SINGLE_RECIPE = "recipe/LOAD_SINGLE_RECIPE";
 const CREATE_RECIPE = "recipe/CREATE_RECIPE";
 const DELETE_RECIPE = "recipe/DELETE_RECIPE";
 const EDIT_RECIPE = "recipe/EDIT_RECIPE"
+const ADD_INGREDIENTS_TO_RECIPE = "recipe/ADD_INGREDIENTS"
 
 
 
@@ -32,6 +33,11 @@ const editRecipe = (data) =>({
     data
 })
 
+
+const addIngredientToRecipe = (recipe) =>({
+    type:ADD_INGREDIENTS_TO_RECIPE,
+    recipe
+})
 
 
 
@@ -95,7 +101,7 @@ export const deleteRecipeThunk = (recipeId) => async (dispatch) =>{
     }
 };
 
-export const editRecipeThunk = (recipe, id) => async(dispatch) =>{
+export const editRecipeThunk = (recipe) => async(dispatch) =>{
     const response = await fetch(`/api/recipes/${recipe.id}`, {
         method:"PUT",
         headers:{
@@ -104,9 +110,33 @@ export const editRecipeThunk = (recipe, id) => async(dispatch) =>{
         body: JSON.stringify(recipe),
     })
     if (response.ok) {
-        dispatch(editRecipe( recipe ));
-        return response;
+        const updatedRecipe = await response.json()
+        dispatch(editRecipe( updatedRecipe ));
+        return updatedRecipe;
       }
+}
+
+export const addIngredientToRecipeThunk = (newIngredient, recipeId) =>async(dispatch) =>{
+    const response = await fetch(`/api/recipes/${recipeId}/add-ingredients`, {
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json", 
+        },
+        body: JSON.stringify(newIngredient),
+    })
+    if (response.ok){
+        const recipe = await response.json()
+        dispatch(addIngredientToRecipe(recipe))
+        return null
+    } else if(response.status<500){
+        const data = await response.json();
+        if(data.errors){
+            return data.errors;
+        }
+        else{
+            return ['An error occurred. Please try again.']
+        }
+    }
 }
 
 
@@ -157,6 +187,15 @@ export default function reducer(state = initialState, action){
             newState.allRecipes[action.data.id] = action.data;
             newState.singleRecipe=action.data;
             return newState;
+        }
+        case ADD_INGREDIENTS_TO_RECIPE:{
+            const newState = {
+                allRecipes:{...state.allRecipes},
+                singleRecipe:action.recipe,
+            }
+            newState.allRecipes[action.recipe.id]=action.recipe
+            return newState
+            
         }
             
         default:
